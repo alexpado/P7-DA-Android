@@ -16,17 +16,15 @@ public class SlideshowFragment extends Fragment {
 
     private FragmentSlideshowBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        SlideshowViewModel slideshowViewModel = new ViewModelProvider(this).get(SlideshowViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        this.binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        View root = this.binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        TextView textView = this.binding.textSlideshow;
+        slideshowViewModel.getText().observe(this.getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
@@ -34,7 +32,7 @@ public class SlideshowFragment extends Fragment {
     public void onDestroyView() {
 
         super.onDestroyView();
-        binding = null;
+        this.binding = null;
     }
 
 }

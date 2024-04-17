@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "8692255254",
+    "project_id": "go4launch-65aaa",
+    "storage_bucket": "go4launch-65aaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8692255254:android:74646cd7f804ead38a8337",
+        "android_client_info": {
+          "package_name": "fr.alexpado.go4lunch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8692255254-ivgp505bnvucj3re6qp6fka2ej4fisvl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmacXNVJsv2cjDPdtSRm8dgjtq1raaOnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8692255254-7qda2e08k4b30222qnp0mak8p93hsldu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
