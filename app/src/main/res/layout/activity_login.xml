@@ -14,14 +14,14 @@
             android:layout_height="match_parent">
 
         <Button
-                android:text="Login"
+                android:text="@string/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/login_button"
                 tools:ignore="MissingConstraints" />
 
         <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2"
