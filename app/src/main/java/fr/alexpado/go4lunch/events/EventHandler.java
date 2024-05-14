@@ -16,20 +16,20 @@ public class EventHandler<K, T extends EventListener<K>> {
 
     public boolean subscribe(T listener) {
 
-        Log.d("EVH", String.format("Registering '%s' as listener in '%s'", listener, this));
+        Log.d("EventHandler", String.format("Registering '%s' as listener in '%s'", listener, this));
         return this.listeners.add(listener);
     }
 
     public boolean unsubscribe(T listener) {
 
-        Log.d("EVH", String.format("Unregistering '%s' as listener in '%s'", listener, this));
+        Log.d("EventHandler", String.format("Unregistering '%s' as listener in '%s'", listener, this));
         return this.listeners.remove(listener);
     }
 
     public void dispatch(K event) {
 
         Log.d(
-                "EVH",
+                "EventHandler",
                 String.format(
                         "Dispatching '%s' to %s listener(s) in '%s'",
                         event,
