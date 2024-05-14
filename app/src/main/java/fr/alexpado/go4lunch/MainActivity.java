@@ -3,6 +3,7 @@ package fr.alexpado.go4lunch;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -48,17 +50,10 @@ public class MainActivity extends AppCompatActivity {
         this.binding = ActivityMainBinding.inflate(this.getLayoutInflater());
         this.setContentView(this.binding.getRoot());
 
-        this.setSupportActionBar(this.binding.appBarMain.toolbar);
+        this.setSupportActionBar(this.binding.activityMainContent.toolbar);
 
-        this.binding.appBarMain.fab.setOnClickListener(
-                view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null)
-                                .setAnchorView(R.id.fab)
-                                .show()
-        );
-
-        DrawerLayout   drawer         = this.binding.drawerLayout;
-        NavigationView navigationView = this.binding.navView;
+        DrawerLayout         drawer         = this.binding.drawerLayout;
+        BottomNavigationView navigationView = this.binding.activityMainContent.bottomNavView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         this.appBarConfiguration = new AppBarConfiguration.Builder(
@@ -91,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        this.getMenuInflater().inflate(R.menu.main, menu);
+        this.getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
         return true;
     }
 
@@ -112,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        Log.d("ACTIVITY", "Clicked menu " + item.getItemId());
 
         if (item.getItemId() == R.id.logout_menu) {
             this.authenticationService.logout(this.getApplicationContext());

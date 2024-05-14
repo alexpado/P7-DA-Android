@@ -1,14 +1,14 @@
-package fr.alexpado.go4lunch.ui.slideshow;
+package fr.alexpado.go4lunch.ui.workmates;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class WorkmatesViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public WorkmatesViewModel() {
 
         this.mText = new MutableLiveData<>();
         this.mText.setValue("This is slideshow fragment");

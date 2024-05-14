@@ -1,4 +1,4 @@
-package fr.alexpado.go4lunch.ui.gallery;
+package fr.alexpado.go4lunch.ui.listview;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,21 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import fr.alexpado.go4lunch.databinding.FragmentGalleryBinding;
+import fr.alexpado.go4lunch.databinding.FragmentListviewBinding;
 
-public class GalleryFragment extends Fragment {
+public class ListViewFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentListviewBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        GalleryViewModel galleryViewModel = new ViewModelProvider(this).get(GalleryViewModel.class);
+        ListViewViewModel listViewViewModel = new ViewModelProvider(this).get(ListViewViewModel.class);
 
-        this.binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        this.binding = FragmentListviewBinding.inflate(inflater, container, false);
         View root = this.binding.getRoot();
 
         TextView textView = this.binding.textGallery;
-        galleryViewModel.getText().observe(this.getViewLifecycleOwner(), textView::setText);
+        listViewViewModel.getText().observe(this.getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

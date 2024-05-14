@@ -1,4 +1,4 @@
-package fr.alexpado.go4lunch.ui.home;
+package fr.alexpado.go4lunch.ui.workmates;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,21 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import fr.alexpado.go4lunch.databinding.FragmentHomeBinding;
+import fr.alexpado.go4lunch.databinding.FragmentWorkmatesBinding;
 
-public class HomeFragment extends Fragment {
+public class WorkmatesFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentWorkmatesBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        WorkmatesViewModel workmatesViewModel = new ViewModelProvider(this).get(WorkmatesViewModel.class);
 
-        this.binding = FragmentHomeBinding.inflate(inflater, container, false);
+        this.binding = FragmentWorkmatesBinding.inflate(inflater, container, false);
         View root = this.binding.getRoot();
 
-        TextView textView = this.binding.textHome;
-        homeViewModel.getText().observe(this.getViewLifecycleOwner(), textView::setText);
+        TextView textView = this.binding.textSlideshow;
+        workmatesViewModel.getText().observe(this.getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

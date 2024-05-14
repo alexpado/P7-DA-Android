@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-            android:id="@+id/logout_menu"
-            android:title="@string/action_logout"
-            android:orderInCategory="100"
-            app:showAsAction="never" />
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_menu_map"
+                android:title="@string/menu_map" />
+        <item
+                android:id="@+id/nav_gallery"
+                android:icon="@drawable/ic_menu_listview"
+                android:title="@string/menu_list" />
+        <item
+                android:id="@+id/nav_slideshow"
+                android:icon="@drawable/ic_menu_workmates"
+                android:title="@string/menu_workmates" />
+    </group>
 </menu>

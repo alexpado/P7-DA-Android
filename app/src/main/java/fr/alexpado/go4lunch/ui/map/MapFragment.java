@@ -1,4 +1,4 @@
-package fr.alexpado.go4lunch.ui.slideshow;
+package fr.alexpado.go4lunch.ui.map;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,21 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import fr.alexpado.go4lunch.databinding.FragmentSlideshowBinding;
+import fr.alexpado.go4lunch.databinding.FragmentMapBinding;
 
-public class SlideshowFragment extends Fragment {
+public class MapFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentMapBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        SlideshowViewModel slideshowViewModel = new ViewModelProvider(this).get(SlideshowViewModel.class);
+        MapViewModel mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
 
-        this.binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        this.binding = FragmentMapBinding.inflate(inflater, container, false);
         View root = this.binding.getRoot();
 
-        TextView textView = this.binding.textSlideshow;
-        slideshowViewModel.getText().observe(this.getViewLifecycleOwner(), textView::setText);
+        TextView textView = this.binding.textHome;
+        mapViewModel.getText().observe(this.getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

@@ -16,9 +16,9 @@
     <!-- </editor-fold> -->
 
     <!-- <editor-fold desc="menu activity_main_drawer"> -->
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_map">Map View</string>
+    <string name="menu_list">List View</string>
+    <string name="menu_workmates">Workmates</string>
     <!-- </editor-fold> -->
 
     <!-- <editor-fold desc="menu main"> -->
