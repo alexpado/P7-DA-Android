@@ -16,12 +16,12 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import fr.alexpado.go4lunch.databinding.ActivityLoginBinding;
 import fr.alexpado.go4lunch.events.login.LoginCanceledEvent;
 import fr.alexpado.go4lunch.events.login.LoginFailureEvent;
 import fr.alexpado.go4lunch.events.login.LoginSuccessEvent;
-import fr.alexpado.go4lunch.jdk.Optional;
 import fr.alexpado.go4lunch.services.AuthenticationService;
 
 public class LoginActivity extends AppCompatActivity {
