@@ -1,9 +1,10 @@
 package fr.alexpado.go4lunch;
 
+import static fr.alexpado.go4lunch.utils.LogUtils.debug;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,12 +17,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import fr.alexpado.go4lunch.databinding.ActivityMainBinding;
 import fr.alexpado.go4lunch.events.login.LogoutEvent;
 import fr.alexpado.go4lunch.services.AuthenticationService;
+import fr.alexpado.go4lunch.utils.NomNomUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 this.appBarConfiguration
         );
         NavigationUI.setupWithNavController(navigationView, navController);
+        debug(this, "Activity is now created.");
     }
 
     @Override
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onStart();
         LogoutEvent.HANDLERS.subscribe(this::onLogoutEvent);
+        debug(this, "Activity is now ready.");
     }
 
 
@@ -104,12 +106,10 @@ public class MainActivity extends AppCompatActivity {
         ) || super.onSupportNavigateUp();
     }
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        Log.d("ACTIVITY", "Clicked menu " + item.getItemId());
-
+        debug(this, "onOptionsItemSelected(): Menu Item '%s' has been clicked.", item.getItemId());
         if (item.getItemId() == R.id.logout_menu) {
             this.authenticationService.logout(this.getApplicationContext());
             return true;
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onLogoutEvent(LogoutEvent event) {
 
+        debug(this, "Received logout event.");
         LogoutEvent.HANDLERS.unsubscribe(this::onLogoutEvent);
         this.finish();
     }

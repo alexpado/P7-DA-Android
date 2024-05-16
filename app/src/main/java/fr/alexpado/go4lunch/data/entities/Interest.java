@@ -1,4 +1,4 @@
-package fr.alexpado.go4lunch.entities;
+package fr.alexpado.go4lunch.data.entities;
 
 import java.time.ZonedDateTime;
 

@@ -1,5 +1,7 @@
 package fr.alexpado.go4lunch;
 
+import static fr.alexpado.go4lunch.utils.LogUtils.debug;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +25,7 @@ import fr.alexpado.go4lunch.events.login.LoginCanceledEvent;
 import fr.alexpado.go4lunch.events.login.LoginFailureEvent;
 import fr.alexpado.go4lunch.events.login.LoginSuccessEvent;
 import fr.alexpado.go4lunch.services.AuthenticationService;
+import fr.alexpado.go4lunch.utils.NomNomUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void initiateSignIn() {
 
+        debug(this, "Starting login flow...");
         this.binding.textView2.setVisibility(View.GONE);
         List<AuthUI.IdpConfig> authProviders = Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build());
 
@@ -61,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void handleAuthenticationResult(FirebaseAuthUIAuthenticationResult result) {
         // Simply redirect this to the authentication service - it's its job
+        debug(this, "Received login packet, sending to authentication service...");
         this.authenticationService.handleAuthenticationResult(result);
     }
 
@@ -70,11 +75,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.authenticationService = BeanFactory.getInstance(AuthenticationService.class);
 
-        if (NomNomUtils.isLoggedIn()) {
-            MainActivity.start(this);
-            return;
-        }
-
         EdgeToEdge.enable(this);
 
         this.binding = ActivityLoginBinding.inflate(this.getLayoutInflater());
@@ -82,6 +82,13 @@ public class LoginActivity extends AppCompatActivity {
 
         this.binding.loginButton.setOnClickListener(view -> this.initiateSignIn());
         this.binding.textView2.setVisibility(View.GONE);
+
+        debug(this, "Activity is now created.");
+
+        if (NomNomUtils.isLoggedIn()) {
+            debug(this, "A session is already active. Redirecting to MainActivity...");
+            MainActivity.start(this);
+        }
     }
 
     @Override
@@ -91,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginFailureEvent.HANDLERS.subscribe(this::onLoginFailureEvent);
         LoginCanceledEvent.HANDLERS.subscribe(this::onLoginCanceledEvent);
         LoginSuccessEvent.HANDLERS.subscribe(this::onLoginSuccessEvent);
+        debug(this, "Activity is now ready.");
     }
 
     /**
@@ -101,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void onLoginFailureEvent(LoginFailureEvent event) {
 
+        debug(this, "Login failed.");
         String errorText = Optional.ofNullable(event.getResponse())
                                    .map(IdpResponse::getError)
                                    .map(Throwable::getMessage)
@@ -118,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void onLoginCanceledEvent(LoginCanceledEvent event) {
 
+        debug(this, "Login canceled by user.");
         this.binding.textView2.setText(R.string.login_cancelled_by_user);
         this.binding.textView2.setVisibility(View.VISIBLE);
     }
@@ -130,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void onLoginSuccessEvent(LoginSuccessEvent event) {
 
+        debug(this, "Login successful. Opening MainActivity...");
         LoginFailureEvent.HANDLERS.unsubscribe(this::onLoginFailureEvent);
         LoginCanceledEvent.HANDLERS.unsubscribe(this::onLoginCanceledEvent);
         LoginSuccessEvent.HANDLERS.unsubscribe(this::onLoginSuccessEvent);

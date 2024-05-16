@@ -1,8 +1,8 @@
 package fr.alexpado.go4lunch.events.login;
 
 import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.auth.FirebaseUser;
 
+import fr.alexpado.go4lunch.data.entities.User;
 import fr.alexpado.go4lunch.events.EventHandler;
 import fr.alexpado.go4lunch.events.EventListener;
 
@@ -12,9 +12,9 @@ public class LoginSuccessEvent {
             "LoginSuccess");
 
     private final IdpResponse  response;
-    private final FirebaseUser user;
+    private final User user;
 
-    public LoginSuccessEvent(IdpResponse response, FirebaseUser user) {
+    public LoginSuccessEvent(IdpResponse response, User user) {
 
         this.response = response;
         this.user     = user;
@@ -25,7 +25,7 @@ public class LoginSuccessEvent {
         return this.response;
     }
 
-    public FirebaseUser getUser() {
+    public User getUser() {
 
         return this.user;
     }

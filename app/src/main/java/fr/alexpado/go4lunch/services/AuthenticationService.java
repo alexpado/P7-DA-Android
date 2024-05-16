@@ -2,20 +2,19 @@ package fr.alexpado.go4lunch.services;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static fr.alexpado.go4lunch.utils.LogUtils.debug;
+import static fr.alexpado.go4lunch.utils.LogUtils.warn;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Map;
-
-import fr.alexpado.go4lunch.NomNomUtils;
+import fr.alexpado.go4lunch.data.entities.User;
+import fr.alexpado.go4lunch.data.repositories.UserRepository;
 import fr.alexpado.go4lunch.events.login.LoginCanceledEvent;
 import fr.alexpado.go4lunch.events.login.LoginFailureEvent;
 import fr.alexpado.go4lunch.events.login.LoginSuccessEvent;
@@ -28,46 +27,30 @@ public class AuthenticationService {
         IdpResponse resp = result.getIdpResponse();
         switch (result.getResultCode()) {
             case RESULT_OK:
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                assert user != null;
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                assert firebaseUser != null;
 
-                Log.d(
-                        "AUTH-SVC",
-                        String.format(
-                                "Account logged in { %s @ %s [ %s ]}",
-                                user.getUid(),
-                                user.getEmail(),
-                                user.getDisplayName()
-                        )
+                debug(
+                        this,
+                        "Account logged in { %s @ %s [ %s ]}",
+                        firebaseUser.getUid(),
+                        firebaseUser.getEmail(),
+                        firebaseUser.getDisplayName()
                 );
 
-                Map<String, Object> map = NomNomUtils.toMap(user);
-                FirebaseFirestore store = FirebaseFirestore.getInstance();
+                UserRepository repository = new UserRepository();
+                User user = repository.saveLocalCopy(firebaseUser);
 
-                store.collection("users")
-                     .document(user.getUid())
-                     .set(map)
-                     .addOnSuccessListener(aVoid -> Log.d(
-                             "AUTH-SVC",
-                             "User saved: " + user.getUid()
-                     ))
-                     .addOnFailureListener(e -> Log.w(
-                             "AUTH-SVC",
-                             "Unable to save logged in user to firestore",
-                             e
-                     ));
-
-                Log.d("AUTH-SVC", "Dispatching login event...");
-
+                debug(this, "Dispatching login event...");
                 LoginSuccessEvent.HANDLERS.dispatch(new LoginSuccessEvent(resp, user));
                 break;
             case RESULT_CANCELED:
-                Log.d("AUTH-SVC", "User canceled authentication: Dispatching event...");
+                debug(this, "User canceled authentication: Dispatching event...");
                 LoginCanceledEvent.HANDLERS.dispatch(new LoginCanceledEvent(resp));
                 break;
             default:
                 assert resp != null;
-                Log.w("AUTH-SVC", "Login failure: Dispatching event...", resp.getError());
+                warn(this, resp.getError(), "Login failure: Dispatching error...");
                 LoginFailureEvent.HANDLERS.dispatch(new LoginFailureEvent(resp));
                 break;
         }
@@ -77,8 +60,8 @@ public class AuthenticationService {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         AuthUI.getInstance().signOut(context);
+        debug(this, "User '%s' is now logged out.", user.getUid());
         LogoutEvent.HANDLERS.dispatch(new LogoutEvent(user));
     }
-
 
 }
